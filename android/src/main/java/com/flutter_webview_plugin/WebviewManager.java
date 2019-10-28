@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.GeolocationPermissions;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -376,6 +377,11 @@ class WebviewManager {
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(supportMultipleWindows);
 
         webView.getSettings().setSupportMultipleWindows(supportMultipleWindows);
+        if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.LOLLIPOP) {
+            CookieManager.getInstance().setAcceptCookie(true);
+        } else {
+            CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+        }
 
         webView.getSettings().setAppCacheEnabled(appCacheEnabled);
 
